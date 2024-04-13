@@ -1,7 +1,4 @@
-package pro.sky.homeWork21;
-
-import java.util.List;
-import java.util.stream.Collectors;
+package pro.sky.homeWork21.domain;
 
 public class Employee {
     private String fullNameOfWorker;
