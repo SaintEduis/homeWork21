@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.homeWork21.domain.Employee;
+import pro.sky.homeWork21.exceptions.BadRequestException;
 import pro.sky.homeWork21.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.homeWork21.exceptions.EmployeeNotFoundException;
 import pro.sky.homeWork21.service.EmployeeService;
@@ -21,12 +22,16 @@ public class EmployeeController {
                             @RequestParam("department") Integer department,
                             @RequestParam("salary") Integer salary) {
         try {
-            employeeService.addEmployee(name, new Employee(name, department, salary));
+            employeeService.addEmployee(name, department, salary);
             return "Сотрудник успешно добавлен!";
         }
         catch (EmployeeAlreadyAddedException e) {
             System.out.println("Пользователь пытается добавить уже существующего работника!");
             throw new EmployeeAlreadyAddedException();
+        }
+        catch (BadRequestException | org.apache.coyote.BadRequestException e) {
+            System.out.println("Пользователь ввёл некоректные данные!");
+            throw new BadRequestException();
         }
     }
 
